@@ -16,24 +16,18 @@ var connection = mysql.createConnection({
 connection.queryAsync('SHOW DATABASES').then(
     function(result) {
         var rows = result[0];
-        return rows;
-        
-    }
-)
-.map(
-    function(row) {
-        return row.Database.rainbow.bold;
-    }
-)
-.then(
-    function(arr){
+        var arrRow=rows.map(
+            function(row){
+                return row.Database.rainbow.bold;
+            }
+        );
         var table=new Clitable({head:["Database names".bold], chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
          , 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
          , 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
          , 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
 });
-        for(var i=0; i<arr.length; i++){
-        table.push([arr[i]])
+        for(var i=0; i<arrRow.length; i++){
+        table.push([arrRow[i]])
         }
         console.log(table.toString());
     }
